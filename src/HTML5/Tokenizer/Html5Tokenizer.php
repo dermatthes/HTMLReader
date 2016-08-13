@@ -1,10 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: matthes
- * Date: 13.08.16
- * Time: 02:42
- */
+    /**
+     * Created by PhpStorm.
+     * User: matthes
+     * Author: Matthias Leuffen <matthes@leuffen.de>
+     *
+     * Date: 13.08.16
+     * Time: 02:42
+     */
 
     namespace HTML5\Tokenizer;
 
@@ -62,25 +64,82 @@
                         $buf = $i->readUntilChars("<");
                         if (strlen($buf) > 0) {
                             $callback->onText($buf);
+                            continue;
+                        }
+
+                        if ($i->eos())
+                            continue;
+
+                        if ($i->readAhead(4) == "<!--") {
+                            $buf = $i->readUntilString("-->");
+                            $buf .= $i->next(3);
+                            $callback->onComment($buf);
+                            continue;
                         }
 
                         if ($i->readAhead(2) == "</") {
                             $i->next(2);
+                            $i->readWhitespace();
                             $buf = $i->readUntilChars(">");
                             $i->next();
-                            $callback->onTagClose($buf);
+                            $callback->onTagClose(trim ($buf));
                             continue;
                         }
 
 
                         $i->next();
-                        $buf = $i->readUntilChars(">");
-                        $i->next();
-                        $callback->onTagOpen($buf, [], false);
+                        $name = $i->readUntilChars(" \n\t/>");
+
+
+
+                        $empty = false;
+                        $attrs = [];
+                        $i->readWhitespace();
+
+                        while (true) {
+                            $i->readWhitespace();
+                            if ($i->readAhead(2) == "/>") {
+                                $empty = true;
+                                $i->next(2);
+                                break;
+                            }
+                            if ($i->readAhead(1) == ">") {
+                                $i->next();
+                                break;
+                            }
+                            $attr = $i->readUntilChars("= >");
+                            $i->readWhitespace();
+                            if ($i->readAhead(1) != "=") {
+                                $val = null;
+                                $attrs[$attr] = $val;
+                                continue;
+                            }
+                            $i->next();
+                            $i->readWhitespace();
+                            $i->readUntilChars("'\"");
+                            if ($i->eos())
+                                break;
+                            $strend = $i->next();
+                            $val = $i->readUntilChars($strend);
+                            $i->next();
+                            $attrs[$attr] = $val;
+                        }
+
+                        $callback->onTagOpen($name, $attrs, $empty);
+
+                        $nextSection = "tag";
+                        if (in_array($name, ["script", "style"]) && $empty == false) {
+                            $nextSection = "script";
+                        }
+                        $section = $nextSection;
+                        break;
+
+                    case "script":
+                        $content = $i->readUntilString("</$name>");
+                        $name = null;
+                        $callback->onText($content);
+                        $section = "tag";
                         continue;
-
-
-
 
 
                 }

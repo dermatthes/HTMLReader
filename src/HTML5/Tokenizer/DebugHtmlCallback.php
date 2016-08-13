@@ -19,7 +19,13 @@
 
         public function onTagOpen(string $name, array $attributes, $isEmpty)
         {
-            $this->data .= "<$name>";
+            $att = [];
+            foreach ($attributes as $key => $val)
+                $att[] = $key . "=\"{$val}\"";
+            $att = implode(" ", $att);
+            if (strlen ($att) > 0)
+                $att = " " . $att;
+            $this->data .= "<{$name}{$att}>";
         }
 
         public function onText(string $text)

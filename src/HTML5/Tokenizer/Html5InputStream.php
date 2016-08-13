@@ -36,7 +36,7 @@
             $buf = "";
             for ($this->index; $this->index < $this->length; $this->index++) {
                 $chr = $this->stream[$this->index];
-                if ($chr !== " " && $chr !== "\n" && $chr !== "\t")
+                if ($chr !== " " && $chr !== "\n" && $chr !== "\t" && $chr !== "\r")
                     break;
                 $buf .= $chr;
             }
@@ -87,7 +87,7 @@
                     if ($str[$i] != $this->stream[$this->index + $i])
                         break;
                 }
-                if ($i == strlen($str)-1)
+                if ($i == strlen($str))
                     break;
                 $this->index++;
                 $buf .= $chr;
