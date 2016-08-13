@@ -19,7 +19,7 @@ class TokenizerTest extends \PHPUnit_Framework_TestCase
 
     public function testTokenizer () {
         $debugCb = new DebugHtmlCallback();
-        $inputS = new Html5InputStream(file_get_contents(__DIR__ . "/test.html"));
+        $inputS = new Html5InputStream(file_get_contents(__DIR__ . "/bightml.html"));
 
         $tokenizer = new Html5Tokenizer();
         $tokenizer->tokenize($inputS, $debugCb);
