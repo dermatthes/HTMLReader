@@ -1,0 +1,29 @@
+{
+    "name": "html5/htmlreader",
+    "type": "library",
+    "description": "Html5 stream reader",
+    "keywords": ["Html", "parsing", "html5"],
+    "homepage": "http://leuffen.de",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matthias Leuffen",
+            "email": "matthes@leuffen.de"
+        }
+    ],
+    "require": {
+        "php": ">=7.0"
+    },
+    "autoload": {
+        "psr-4": { "HTML5\\": "src/HTML5" },
+        "exclude-from-classmap": [
+            "/test/"
+        ]
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    }
+}
