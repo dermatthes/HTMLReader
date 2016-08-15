@@ -1,3 +1,4 @@
+[<img src="https://travis-ci.org/dermatthes/HTMLReader.svg">](https://travis-ci.org/dermatthes/HTMLReader)
 
 # HTMLReader
 
