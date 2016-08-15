@@ -34,4 +34,5 @@ We have packed a DebugHtmlCallback Handler.
 
 ## Credits
 
-Written on 13.08.2016 my Matthias Leuffen 
+Written by Matthias Leuffen 
+http://leuffen.de
