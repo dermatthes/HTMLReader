@@ -14,7 +14,7 @@ it your own.
 Use Composer to install the Package from Packagist.com:
 
 ```
-composer add HTML5/HtmlReader
+composer add html5/htmlreader
 ```
 
 
