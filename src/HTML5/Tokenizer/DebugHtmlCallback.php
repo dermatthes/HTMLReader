@@ -20,8 +20,13 @@
         public function onTagOpen(string $name, array $attributes, $isEmpty)
         {
             $att = [];
-            foreach ($attributes as $key => $val)
+            foreach ($attributes as $key => $val) {
+                if ($val === null) {
+                    $att[] = $key;
+                    continue;
+                }
                 $att[] = $key . "=\"{$val}\"";
+            }
             $att = implode(" ", $att);
             if (strlen ($att) > 0)
                 $att = " " . $att;
@@ -45,6 +50,6 @@
 
         public function onComment(string $data)
         {
-            $this->data .= $data;
+            $this->data .= "<!--" . $data . "-->";
         }
     }

@@ -1,8 +1,8 @@
 {
     "name": "html5/htmlreader",
     "type": "library",
-    "description": "Html5 stream reader",
-    "keywords": ["Html", "parsing", "html5"],
+    "description": "Html5 stream tokenizer/reader (not using libxml)",
+    "keywords": ["Html", "parsing", "tokenizer", "html5"],
     "homepage": "http://leuffen.de",
     "license": "MIT",
     "authors": [

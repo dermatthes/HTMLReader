@@ -42,8 +42,9 @@
                         }
 
                         if ($i->readAhead(4) == "<!--") {
+                            $i->next(4);
                             $buf = $i->readUntilString("-->");
-                            $buf .= $i->next(3);
+                            $i->next(3);
                             $callback->onComment($buf);
                         }
 
@@ -71,8 +72,9 @@
                             continue;
 
                         if ($i->readAhead(4) == "<!--") {
+                            $i->next(4);
                             $buf = $i->readUntilString("-->");
-                            $buf .= $i->next(3);
+                            $i->next(3);
                             $callback->onComment($buf);
                             continue;
                         }
