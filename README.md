@@ -1,6 +1,6 @@
 [<img src="https://travis-ci.org/dermatthes/HTMLReader.svg">](https://travis-ci.org/dermatthes/HTMLReader)
 
-# HTMLReader
+# HTMLReader 
 
 HtmlReader is a very simple Html Parser NOT build on libxml. It is thought
 as replacement for XMLReader which won't parse html5 input data
