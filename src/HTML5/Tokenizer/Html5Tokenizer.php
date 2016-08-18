@@ -63,7 +63,7 @@
 
                         $buf = $i->readUntilChars("<");
                         if (strlen($buf) > 0) {
-                            $callback->onText($buf);
+                            $callback->onText(html_entity_decode($buf));
                             continue;
                         }
 
@@ -121,6 +121,7 @@
                                 break;
                             $strend = $i->next();
                             $val = $i->readUntilChars($strend);
+                            $val = html_entity_decode($val);
                             $i->next();
                             $attrs[$attr] = $val;
                         }
@@ -137,7 +138,7 @@
                     case "script":
                         $content = $i->readUntilString("</$name>");
                         $name = null;
-                        $callback->onText($content);
+                        $callback->onText(html_entity_decode($content));
                         $section = "tag";
                         continue;
 
