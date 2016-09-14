@@ -30,7 +30,7 @@
             $att = implode(" ", $att);
             if (strlen ($att) > 0)
                 $att = " " . $att;
-            $this->data .= "<{$name}{$att}>";
+            $this->data .= "<a{$name}{$att}>";
         }
 
         public function onText(string $text)

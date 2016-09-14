@@ -28,6 +28,14 @@
                             $callback->onWhitespace($buf);
                         }
 
+                        if ($i->readAhead(4) == "<!--") {
+                            $i->next(4);
+                            $buf = $i->readUntilString("-->");
+                            $i->next(3);
+                            $callback->onComment($buf);
+                            continue;
+                        }
+
                         if ($i->readAhead(2) == "<!") {
                             $buf = $i->readUntilChars(">");
                             $buf .= $i->next();
@@ -39,13 +47,6 @@
                         if (strlen($buf) > 0) {
                             $callback->onWhitespace($buf);
                             continue;
-                        }
-
-                        if ($i->readAhead(4) == "<!--") {
-                            $i->next(4);
-                            $buf = $i->readUntilString("-->");
-                            $i->next(3);
-                            $callback->onComment($buf);
                         }
 
 

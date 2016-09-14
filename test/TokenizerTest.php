@@ -26,4 +26,14 @@ class TokenizerTest extends \PHPUnit_Framework_TestCase
         echo $debugCb->data;
     }
 
+
+    public function testTokenizerFileStartsWithComment () {
+        $debugCb = new DebugHtmlCallback();
+        $inputS = new Html5InputStream(file_get_contents(__DIR__ . "/testFileStartsWithComment.html"));
+
+        $tokenizer = new Html5Tokenizer();
+        $tokenizer->tokenize($inputS, $debugCb);
+        echo $debugCb->data;
+    }
+
 }
