@@ -17,7 +17,7 @@
             $this->data .= $ws;
         }
 
-        public function onTagOpen(string $name, array $attributes, $isEmpty)
+        public function onTagOpen(string $name, array $attributes, $isEmpty, $ns=null)
         {
             $att = [];
             foreach ($attributes as $key => $val) {
@@ -30,7 +30,9 @@
             $att = implode(" ", $att);
             if (strlen ($att) > 0)
                 $att = " " . $att;
-            $this->data .= "<a{$name}{$att}>";
+            if ($ns !== null)
+                $ns = "$ns:";
+            $this->data .= "<{$ns}{$name}{$att}>";
         }
 
         public function onText(string $text)
@@ -38,9 +40,11 @@
             $this->data .= $text;
         }
 
-        public function onTagClose(string $name)
+        public function onTagClose(string $name, $ns=null)
         {
-            $this->data .= "</$name>";
+            if ($ns !== null)
+                $ns = "$ns:";
+            $this->data .= "</{$ns}$name>";
         }
 
         public function onProcessingInstruction(string $data)

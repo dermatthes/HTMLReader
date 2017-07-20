@@ -13,6 +13,16 @@
 
     class Html5Tokenizer {
 
+
+        private function _name2ns (&$name, &$ns) {
+            $ns = null;
+            if (strpos($name, ":") !== false) {
+                $ns = substr ($name, 0, strpos ($name, ":"));
+                $name = substr ($name, strpos($name, ":")+1);
+            }
+        }
+
+
         public function tokenize (Html5InputStream $i, HtmlCallback $callback) {
 
             $section = "pre";
@@ -85,7 +95,9 @@
                             $i->readWhitespace();
                             $buf = $i->readUntilChars(">");
                             $i->next();
-                            $callback->onTagClose(trim ($buf));
+                            $buf = trim ($buf);
+                            $this->_name2ns($buf, $ns);
+                            $callback->onTagClose($buf, $ns);
                             continue;
                         }
 
@@ -129,7 +141,9 @@
                             $attrs[$attr] = $val;
                         }
 
-                        $callback->onTagOpen($name, $attrs, $empty);
+                        $this->_name2ns($name, $ns);
+
+                        $callback->onTagOpen($name, $attrs, $empty, $ns);
 
                         $nextSection = "tag";
                         if (in_array($name, ["script", "style"]) && $empty == false) {

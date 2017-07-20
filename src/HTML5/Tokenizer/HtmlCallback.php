@@ -12,11 +12,11 @@
 
         public function onWhitespace(string $ws);
 
-        public function onTagOpen(string $name, array $attributes, $isEmpty);
+        public function onTagOpen(string $name, array $attributes, $isEmpty, $ns=null);
 
         public function onText (string $text);
 
-        public function onTagClose(string $name);
+        public function onTagClose(string $name, $ns=null);
 
         public function onProcessingInstruction(string $data);
 
