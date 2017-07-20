@@ -6,4 +6,4 @@ php:
 install:
   - composer install
   - composer update
-script: phpunit --configuration phpunit.xml.dist
+script: vendor/bin/phpunit --configuration phpunit.xml.dist

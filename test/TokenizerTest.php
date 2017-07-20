@@ -12,8 +12,9 @@ namespace HTML5\Test;
 use HTML5\Tokenizer\DebugHtmlCallback;
 use HTML5\Tokenizer\Html5InputStream;
 use HTML5\Tokenizer\Html5Tokenizer;
+use PHPUnit\Framework\TestCase;
 
-class TokenizerTest extends \PHPUnit_Framework_TestCase
+class TokenizerTest extends TestCase
 {
 
 

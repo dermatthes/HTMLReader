@@ -11,8 +11,9 @@
 
     use HTML5\HTMLReader;
     use HTML5\Tokenizer\DebugHtmlCallback;
+    use PHPUnit\Framework\TestCase;
 
-    class HtmlReaderTest extends \PHPUnit_Framework_TestCase {
+    class HtmlReaderTest extends TestCase {
 
         
         
