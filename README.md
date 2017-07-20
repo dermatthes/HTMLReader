@@ -35,7 +35,9 @@ $reader->parse();
 We have packed a DebugHtmlCallback Handler.
 
 
-## Updates
+## New in Version 1.1.0
+
+- Added Support for Namespaces 
 
 
 
