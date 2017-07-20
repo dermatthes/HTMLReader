@@ -1,7 +1,7 @@
 
 [![Downloads this Month](https://img.shields.io/packagist/dm/html5/htmlreader.svg)](https://packagist.org/packages/html5/htmlreader)
 [<img src="https://travis-ci.org/dermatthes/HTMLReader.svg">](https://travis-ci.org/dermatthes/HTMLReader)
-[![Latest Stable Version](https://poser.pugx.org/html5/htmlreader/v/stable)](https://github.com/nette/utils/releases)
+[![Latest Stable Version](https://poser.pugx.org/html5/htmlreader/v/stable)](https://github.com/html5/htmlreader/releases)
 
 # HTMLReader 
 
