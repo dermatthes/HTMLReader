@@ -146,7 +146,7 @@
                         $callback->onTagOpen($name, $attrs, $empty, $ns);
 
                         $nextSection = "tag";
-                        if (in_array($name, ["script", "style"]) && $empty == false) {
+                        if (in_array($name, ["script", "style"]) && $empty == false && $ns == null) {
                             $nextSection = "script";
                         }
                         $section = $nextSection;
