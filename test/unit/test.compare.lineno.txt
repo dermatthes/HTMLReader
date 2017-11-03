@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+#2#<html lang="en">
+#3#<head>
+    #4#<meta charset="UTF-8" some="other">
+    #5#<title wur>Title#5#</title>
+
+    <!--[if lte IE 8]>
+    <script type="text/javascript">
+        window.brokenIE = true;
+    </script>
+    <![endif]-->
+
+
+    #14#<script lang="javascript">
+        echo "<script sonsta>";
+    #16#</script>
+    #17#<some link>#17#</some>
+    #18#<ns:some>#18#</ns:some>
+#19#</head>
+#20#<body>
+
+#22#</body>
+#23#</html>

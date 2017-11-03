@@ -35,27 +35,27 @@
                     case "pre":
                         $buf = $i->readWhitespace();
                         if (strlen ($buf) > 0) {
-                            $callback->onWhitespace($buf);
+                            $callback->onWhitespace($buf, $i->getCurLineNo());
                         }
 
                         if ($i->readAhead(4) == "<!--") {
                             $i->next(4);
                             $buf = $i->readUntilString("-->");
                             $i->next(3);
-                            $callback->onComment($buf);
+                            $callback->onComment($buf, $i->getCurLineNo());
                             continue;
                         }
 
                         if ($i->readAhead(2) == "<!") {
                             $buf = $i->readUntilChars(">");
                             $buf .= $i->next();
-                            $callback->onProcessingInstruction($buf);
+                            $callback->onProcessingInstruction($buf, $i->getCurLineNo());
                             continue;
                         }
 
                         $buf = $i->readUntilChars("<");
                         if (strlen($buf) > 0) {
-                            $callback->onWhitespace($buf);
+                            $callback->onWhitespace($buf, $i->getCurLineNo());
                             continue;
                         }
 
@@ -69,13 +69,13 @@
                     case "tag":
                         $buf = $i->readWhitespace();
                         if (strlen ($buf) > 0) {
-                            $callback->onWhitespace($buf);
+                            $callback->onWhitespace($buf, $i->getCurLineNo());
                             continue;
                         }
 
                         $buf = $i->readUntilChars("<");
                         if (strlen($buf) > 0) {
-                            $callback->onText(html_entity_decode($buf));
+                            $callback->onText(html_entity_decode($buf), $i->getCurLineNo());
                             continue;
                         }
 
@@ -86,7 +86,7 @@
                             $i->next(4);
                             $buf = $i->readUntilString("-->");
                             $i->next(3);
-                            $callback->onComment($buf);
+                            $callback->onComment($buf, $i->getCurLineNo());
                             continue;
                         }
 
@@ -97,7 +97,7 @@
                             $i->next();
                             $buf = trim ($buf);
                             $this->_name2ns($buf, $ns);
-                            $callback->onTagClose($buf, $ns);
+                            $callback->onTagClose($buf, $ns, $i->getCurLineNo());
                             continue;
                         }
 
@@ -143,7 +143,7 @@
 
                         $this->_name2ns($name, $ns);
 
-                        $callback->onTagOpen($name, $attrs, $empty, $ns);
+                        $callback->onTagOpen($name, $attrs, $empty, $ns, $i->getCurLineNo());
 
                         $nextSection = "tag";
                         if (in_array($name, ["script", "style"]) && $empty == false && $ns == null) {
@@ -155,7 +155,7 @@
                     case "script":
                         $content = $i->readUntilString("</$name>");
                         $name = null;
-                        $callback->onText(html_entity_decode($content));
+                        $callback->onText(html_entity_decode($content), $i->getCurLineNo());
                         $section = "tag";
                         continue;
 

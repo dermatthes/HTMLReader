@@ -18,6 +18,8 @@
 
         private $length;
 
+        private $curLineNo = 1;
+
         public function __construct(string $input)
         {
             $this->stream = $input;
@@ -25,17 +27,26 @@
         }
 
 
-        public function eos () : bool {
+        public function getCurLineNo () : int
+        {
+            return $this->curLineNo;
+        }
+
+        public function eos () : bool
+        {
             if ($this->index >= $this->length)
                 return true;
             return false;
         }
 
 
-        public function readWhitespace() : string {
+        public function readWhitespace() : string
+        {
             $buf = "";
             for ($this->index; $this->index < $this->length; $this->index++) {
                 $chr = $this->stream[$this->index];
+                if ($chr === "\n")
+                    $this->curLineNo++;
                 if ($chr !== " " && $chr !== "\n" && $chr !== "\t" && $chr !== "\r")
                     break;
                 $buf .= $chr;
@@ -44,7 +55,8 @@
         }
 
 
-        public function next($num = 1) : string {
+        public function next($num = 1) : string
+        {
             $buf = "";
             for ($i = 0; $i < $num; $i++) {
                 if ($this->eos())
@@ -54,10 +66,13 @@
             return $buf;
         }
 
-        public function readUntilChars($chars) {
+        public function readUntilChars($chars)
+        {
             $buf = "";
             for ($this->index; $this->index < $this->length; $this->index++) {
                 $chr = $this->stream[$this->index];
+                if ($chr === "\n")
+                    $this->curLineNo++;
                 if (strpos($chars, $chr) !== false)
                     break;
                 $buf .= $chr;
@@ -65,7 +80,8 @@
             return $buf;
         }
 
-        public function readAhead ($num) {
+        public function readAhead ($num)
+        {
             $buf = "";
             $toOffset = $this->index + $num;
             if ($toOffset > $this->length)
@@ -77,7 +93,8 @@
         }
 
 
-        public function readUntilString($str) {
+        public function readUntilString($str)
+        {
             $buf = "";
             while (true) {
                 if ($this->eos())
@@ -89,6 +106,8 @@
                 }
                 if ($i == strlen($str))
                     break;
+                if ($chr === "\n")
+                    $this->curLineNo++;
                 $this->index++;
                 $buf .= $chr;
             }

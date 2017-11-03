@@ -10,16 +10,16 @@
 
     interface HtmlCallback {
 
-        public function onWhitespace(string $ws);
+        public function onWhitespace(string $ws, int $lineNo);
 
-        public function onTagOpen(string $name, array $attributes, $isEmpty, $ns=null);
+        public function onTagOpen(string $name, array $attributes, $isEmpty, $ns=null, int $lineNo);
 
-        public function onText (string $text);
+        public function onText (string $text, int $lineNo);
 
-        public function onTagClose(string $name, $ns=null);
+        public function onTagClose(string $name, $ns=null, int $lineNo);
 
-        public function onProcessingInstruction(string $data);
+        public function onProcessingInstruction(string $data, int $lineNo);
 
-        public function onComment (string $data);
+        public function onComment (string $data, int $lineNo);
 
     }

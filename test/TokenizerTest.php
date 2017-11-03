@@ -7,34 +7,34 @@
  */
 
 namespace HTML5\Test;
+require __DIR__ . "/../vendor/autoload.php";
 
+
+use Tester\Assert;
+\Tester\Environment::setup();
 
 use HTML5\Tokenizer\DebugHtmlCallback;
 use HTML5\Tokenizer\Html5InputStream;
 use HTML5\Tokenizer\Html5Tokenizer;
 use PHPUnit\Framework\TestCase;
 
-class TokenizerTest extends TestCase
-{
+
+$debugCb = new DebugHtmlCallback();
+$inputS = new Html5InputStream(file_get_contents(__DIR__ . "/unit/test.html"));
+
+$tokenizer = new Html5Tokenizer();
+$tokenizer->tokenize($inputS, $debugCb);
+echo $debugCb->data;
 
 
-    public function testTokenizer () {
-        $debugCb = new DebugHtmlCallback();
-        $inputS = new Html5InputStream(file_get_contents(__DIR__ . "/test.html"));
-
-        $tokenizer = new Html5Tokenizer();
-        $tokenizer->tokenize($inputS, $debugCb);
-        echo $debugCb->data;
-    }
 
 
-    public function testTokenizerFileStartsWithComment () {
-        $debugCb = new DebugHtmlCallback();
-        $inputS = new Html5InputStream(file_get_contents(__DIR__ . "/testFileStartsWithComment.html"));
+$debugCb = new DebugHtmlCallback();
+$inputS = new Html5InputStream(file_get_contents(__DIR__ . "/testFileStartsWithComment.html"));
 
-        $tokenizer = new Html5Tokenizer();
-        $tokenizer->tokenize($inputS, $debugCb);
-        echo $debugCb->data;
-    }
+$tokenizer = new Html5Tokenizer();
+$tokenizer->tokenize($inputS, $debugCb);
+echo $debugCb->data;
 
-}
+
+Assert::equal(true, true);
