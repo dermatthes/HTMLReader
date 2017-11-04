@@ -15,13 +15,13 @@
     class HTMLReader {
 
         private $inputStream = null;
-        private $tokenizer;
+        private $tokenizerOpts = [];
         private $callback = null;
         
         
         
-        public function __construct() {
-            
+        public function __construct(array $tokenzierOpts = []) {
+            $this->tokenizerOpts = $tokenzierOpts;
         }
 
 
@@ -46,7 +46,7 @@
                 throw new \InvalidArgumentException("No html data loaded. Call loadHtml() or loadHtmlString()");
             if ($this->callback === null)
                 throw new \InvalidArgumentException("No Callback Handler set. Call setHandler() to set a proper callback handler");
-            $t = new Html5Tokenizer();
+            $t = new Html5Tokenizer($this->tokenizerOpts);
             $t->tokenize($this->inputStream, $this->callback);
             return true;
         }
