@@ -44,8 +44,9 @@
             $parseOnlyLength = strlen($this->parseOnlyTagPrefix);
 
             while (true) {
-                if ($i->eos())
+                if ($i->eos()) {
                     break;
+                }
 
                 switch ($section) {
                     case "pre":
@@ -178,6 +179,6 @@
 
                 }
             }
-
+            $callback->onEos();
         }
     }

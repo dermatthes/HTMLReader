@@ -68,4 +68,9 @@
         {
             $this->data .= "<!--" . $data . "-->";
         }
+
+        public function onEos()
+        {
+
+        }
     }

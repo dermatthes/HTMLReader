@@ -22,4 +22,6 @@
 
         public function onComment (string $data, int $lineNo);
 
+        public function onEos();
+
     }
