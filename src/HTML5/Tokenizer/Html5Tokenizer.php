@@ -55,7 +55,7 @@
                             $callback->onWhitespace($buf, $i->getCurLineNo());
                         }
 
-                        if ($i->readAhead(4) == "<!--" && $this->parseComment) {
+                        if ($this->parseComment && $i->readAhead(4) == "<!--") {
                             $i->next(4);
                             $buf = $i->readUntilString("-->");
                             $i->next(3);
@@ -63,7 +63,7 @@
                             continue;
                         }
 
-                        if ($i->readAhead(2) == "<!" && $this->parseProcessingInstruction) {
+                        if ($this->parseProcessingInstruction && $i->readAhead(2) == "<!") {
                             $buf = $i->readUntilChars(">");
                             $buf .= $i->next();
                             $callback->onProcessingInstruction($buf, $i->getCurLineNo());
@@ -90,7 +90,8 @@
                             continue;
                         }
 
-                        $buf = $i->readUntilString("<{$this->parseOnlyTagPrefix}");
+                        // Read until next < - decide afterwards if we can do something with it.
+                        $buf = $i->readUntilString("<");
                         if (strlen($buf) > 0) {
                             $callback->onText(html_entity_decode($buf), $i->getCurLineNo());
                             continue;
@@ -99,7 +100,7 @@
                         if ($i->eos())
                             continue;
 
-                        if ($i->readAhead(4) == "<!--" && $this->parseComment) {
+                        if ($this->parseComment && $i->readAhead(4) == "<!--") {
                             $i->next(4);
                             $buf = $i->readUntilString("-->");
                             $i->next(3);
@@ -112,12 +113,18 @@
                             $i->readWhitespace();
                             $buf = $i->readUntilChars(">");
                             $i->next();
-                            $buf = trim ($buf);
+                            // append namespace to name
+                            $buf = $this->parseOnlyTagPrefix . trim ($buf);
                             $this->_name2ns($buf, $ns);
                             $callback->onTagClose($buf, $ns, $i->getCurLineNo());
                             continue;
                         }
 
+                        if ($this->parseOnlyTagPrefix != "" && ($str = $i->readAhead(1 + $parseOnlyLength)) !== "<{$this->parseOnlyTagPrefix}") {
+                            $callback->onText($str, $i->getCurLineNo());
+                            $i->next(1 + $parseOnlyLength);
+                            continue;
+                        }
 
                         $i->next();
                         $name = $i->readUntilChars(" \n\t/>");
@@ -163,7 +170,7 @@
                         $callback->onTagOpen($name, $attrs, $empty, $ns, $i->getCurLineNo());
 
                         $nextSection = "tag";
-                        if (in_array($name, $this->parseOverTags) && $empty == false && $ns == null) {
+                        if ($empty == false && $ns == null && in_array($name, $this->parseOverTags)) {
                             $nextSection = "script";
                         }
                         $section = $nextSection;

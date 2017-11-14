@@ -17,7 +17,7 @@
     <some link></some>
     #18#<esi:wurst>
         Wurst
-    </esi:wurst>
+    #20#</esi:wurst>
     <ns:some></ns:some>
 </head>
 <body>
